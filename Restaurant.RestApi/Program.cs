@@ -27,7 +27,7 @@ public class Program
     app.MapGet("/", async context =>
       {
         await context.Response.WriteAsync(
-      string.Format("Hello World! {0} evvviva", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
+      string.Format("Hello, World!")
       );
       }
     );
