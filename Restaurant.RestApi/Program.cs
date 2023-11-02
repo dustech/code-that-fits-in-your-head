@@ -41,7 +41,9 @@ app.MapGet("/weatherforecast", () =>
 
 app.MapGet("/", async context =>
   {
-    await context.Response.WriteAsync("Hello World!");
+    await context.Response.WriteAsync(
+      string.Format("Hello World! {0} evvviva", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
+      );
   }
 );
 
