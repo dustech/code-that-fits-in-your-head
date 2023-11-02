@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using static Dustech.Restaurant.RestApi.Constants;
 
-namespace Dustech.Restaurant.RestApi;
+namespace Dustech.Restaurant.RestApi.Controllers;
 
 [Route(BASEURL)]
 public class HomeController : ControllerBase
