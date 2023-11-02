@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.RestApi", "Restaurant.RestApi\Restaurant.RestApi.csproj", "{28CB427F-1699-4EFC-8218-48E4C463A39B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.RestApi.Tests", "Restaurant.RestApi.Tests\Restaurant.RestApi.Tests.csproj", "{1CD48C99-DB2D-4ADC-9334-01C3328DC805}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{28CB427F-1699-4EFC-8218-48E4C463A39B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28CB427F-1699-4EFC-8218-48E4C463A39B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28CB427F-1699-4EFC-8218-48E4C463A39B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CD48C99-DB2D-4ADC-9334-01C3328DC805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CD48C99-DB2D-4ADC-9334-01C3328DC805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CD48C99-DB2D-4ADC-9334-01C3328DC805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CD48C99-DB2D-4ADC-9334-01C3328DC805}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
