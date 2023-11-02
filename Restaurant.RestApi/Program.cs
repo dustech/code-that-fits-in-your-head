@@ -1,5 +1,6 @@
-public class Program
+public sealed class Program
 {
+
   public static void Main(string[] args)
   {
     var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ public class Program
     // builder.Services.AddEndpointsApiExplorer();
     //commento per un futuro con Swagger
     // builder.Services.AddSwaggerGen();
+    builder.Services.AddControllers(); // per usare UseEndpoints
 
     var app = builder.Build();
 
@@ -21,17 +23,12 @@ public class Program
       app.UseDeveloperExceptionPage();
     }
 
-    app.UseHttpsRedirection();
+    //app.UseHttpsRedirection();
+    app.UseRouting();
 
-
-    app.MapGet("/", async context =>
-      {
-        await context.Response.WriteAsync(
-      string.Format("Hello, World!")
-      );
-      }
-    );
-
+#pragma warning disable ASP0014
+    app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+#pragma warning restore ASP0014
     app.Run();
   }
 }

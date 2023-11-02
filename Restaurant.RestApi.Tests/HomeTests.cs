@@ -4,19 +4,22 @@ namespace Dustech.Restaurant.RestApi.Tests;
 
 public class HomeTests
 {
-  [Fact(DisplayName = "HomeIsOk")]
-  public async Task HomeIsOk()
+  [Fact(DisplayName = "HomeReturnsJson")]
+  public async Task HomeReturnsJson()
   {
     using var factory = new WebApplicationFactory<Program>();
     var client = factory.CreateClient();
 
-    var response = await client
-        .GetAsync(new Uri("", UriKind.Relative))
-        .ConfigureAwait(false);
+    using var request = new HttpRequestMessage(HttpMethod.Get, "");
+    request.Headers.Accept.ParseAdd("application/json");
+    var response = await client.SendAsync(request);
 
     Assert.True(
         response.IsSuccessStatusCode,
         $"Actual status code: {response.StatusCode}.");
+    Assert.Equal(
+        "application/json",
+        response.Content.Headers.ContentType?.MediaType);
 
   }
 
