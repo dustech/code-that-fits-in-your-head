@@ -1,3 +1,5 @@
+namespace Dustech.Restaurant.RestApi;
+
 public sealed class Program
 {
 

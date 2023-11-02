@@ -4,6 +4,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
+        <AnalysisMode>AllEnabledByDefault</AnalysisMode>
         <AssemblyName>Dustech.Restaurant.RestApi</AssemblyName>
         <RootNamespace>Dustech.Restaurant.RestApi</RootNamespace>
     </PropertyGroup>

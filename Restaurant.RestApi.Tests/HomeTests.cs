@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing; // to use WebApplicationFactory
+﻿using System.Diagnostics.CodeAnalysis; // to use SuppressMessage
+using Microsoft.AspNetCore.Mvc.Testing; // to use WebApplicationFactory
 
 namespace Dustech.Restaurant.RestApi.Tests;
 
 public class HomeTests
 {
   [Fact(DisplayName = "HomeReturnsJson")]
+
   public async Task HomeReturnsJson()
   {
     using var factory = new WebApplicationFactory<Program>();

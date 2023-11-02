@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <AnalysisMode>AllEnabledByDefault</AnalysisMode>
         <AssemblyName>Dustech.Restaurant.RestApi.Tests</AssemblyName>
         <RootNamespace>Dustech.Restaurant.RestApi.Tests</RootNamespace>
     </PropertyGroup>
