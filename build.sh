@@ -1,3 +1,4 @@
 #!/bin/bash
 dotnet clean && \
-dotnet test --configuration Release
+dotnet build && \
+dotnet test
