@@ -1,0 +1,21 @@
+POST http://localhost:5032/reservations HTTP/1.1
+content-type: application/json
+
+{
+  "at": "2023-11-02 19:00",
+  "email": "foo@bar.com",
+  "name": "Foo Bar Buzzzississi",
+  "quantity": 2
+}
+
+###
+
+POST http://localhost:5032/reservations HTTP/1.1
+content-type: application/json
+
+{
+  "at": "2023-11-02 20:00",
+  "email": "foo@bar.com",
+  "name": "Foo Bar Bizzi",
+  "quantity": 2
+}
