@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc; // to use vApiController, Route
 namespace Dustech.Restaurant.RestApi.Controllers;
 
 [ApiController, Route("[controller]")]
-public class ReservationsController(IReservationsRepository Repository)
+public class ReservationsController(IReservationsRepository Repository) // : ControllerBase
 {
     public IReservationsRepository Repository { get; } = Repository ?? throw new ArgumentNullException(nameof(Repository));
 
+    //   [HttpPost]
     public async Task Post(ReservationDto dto)
     {
         ArgumentNullException.ThrowIfNull(dto);
@@ -24,5 +25,18 @@ public class ReservationsController(IReservationsRepository Repository)
             )
             .ConfigureAwait(false);
     }
+    // [HttpGet]
+    // public IActionResult Get()
+    // {
+    //     var json = new
+    //     {
+    //         at = "2023-11-02 19:00",
+    //         email = "foo@bar.com",
+    //         name = "Foo Bar Buzzzississi",
+    //         quantity = 2
+    //     };
+
+    //     return Ok(json);
+    // }
 
 }
