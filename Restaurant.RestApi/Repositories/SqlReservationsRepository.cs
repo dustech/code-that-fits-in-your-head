@@ -2,6 +2,8 @@
 using Dustech.Restaurant.RestApi.Models; // Reservation
 using Microsoft.Data.SqlClient; // SqlConnection,SqlCommand,SqlParameter
 using System.Data; // SqlDbType
+using System.Globalization; // CultureInfo 
+
 namespace Dustech.Restaurant.RestApi.Repositories;
 
 public class SqlReservationsRepository(string connectionString) : IReservationsRepository
@@ -16,7 +18,7 @@ public class SqlReservationsRepository(string connectionString) : IReservationsR
         using SqlConnection conn = new(ConnectionString);
         // using SqlCommand cmd = new (createReservationSql, conn);
         using SqlCommand cmd = new(createReservationSql, conn);
-        SqlParameter p1, p2, p3;
+        SqlParameter p1, p2, p3, p4;
         p1 = new()
         {
             ParameterName = "At",
@@ -31,11 +33,17 @@ public class SqlReservationsRepository(string connectionString) : IReservationsR
         };
         p3 = new()
         {
-            ParameterName = "Name",
+            ParameterName = "Email",
             SqlDbType = SqlDbType.NVarChar,
             SqlValue = reservation.Email
         };
-        cmd.Parameters.AddRange([p1, p2, p3]);
+        p4 = new()
+        {
+            ParameterName = "Quantity",
+            SqlDbType = SqlDbType.Int,
+            SqlValue = reservation.Quantity
+        };
+        cmd.Parameters.AddRange([p1, p2, p3, p4]);
         // cmd.Parameters.Add(new SqlParameter("@At", reservation.At));
         // cmd.Parameters.Add(new SqlParameter("@Name", reservation.Name));
         // cmd.Parameters.Add(new SqlParameter("@Email", reservation.Email));
