@@ -15,8 +15,6 @@ public class ReservationsController(IReservationsRepository Repository) // : Con
     public async Task<ActionResult> Post(ReservationDto dto)
     {
         ArgumentNullException.ThrowIfNull(dto);
-        if (dto.At is null)
-            return new BadRequestResult();
         if (!DateTime.TryParse(dto.At, out var d))
             return new BadRequestResult();
         if (dto.Email is null)
