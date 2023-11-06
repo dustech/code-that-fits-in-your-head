@@ -1,5 +1,7 @@
 using Dustech.Restaurant.RestApi.Interfaces; // to use IReservationsRepository
-using Dustech.Restaurant.RestApi.Models; // to use Reservation
+using Dustech.Restaurant.RestApi.Models; // Reservation
+using Dustech.Restaurant.RestApi.Repositories; // SqlReservationsRepository
+using Microsoft.Data.SqlClient; //SqlConnectionStringBuilder 
 
 
 namespace Dustech.Restaurant.RestApi;
@@ -17,9 +19,25 @@ public sealed class Program
         // builder.Services.AddEndpointsApiExplorer();
         //commento per un futuro con Swagger
         // builder.Services.AddSwaggerGen();
+        SqlConnectionStringBuilder sqlConnectionStringBuilder = new()
+        {
+            InitialCatalog = "Restaurant",
+            MultipleActiveResultSets = true,
+            Encrypt = true,
+            TrustServerCertificate = true,
+            ConnectTimeout = 10,
+
+            DataSource = "localhost,1434",//Environment.GetEnvironmentVariable("DUSIP");
+            UserID = "dustech",
+            Password = Environment.GetEnvironmentVariable("SQLPASSWORD"), // password;
+            PersistSecurityInfo = false
+        };
+
+        var connStr = sqlConnectionStringBuilder.ConnectionString;
+
         builder.Services.AddControllers(); // per usare UseEndpoints
         builder.Services.AddSingleton<IReservationsRepository>(
-            new NullRepository()
+            new SqlReservationsRepository(connStr)
         );
         var app = builder.Build();
 
@@ -40,11 +58,4 @@ public sealed class Program
         app.Run();
     }
 
-    private sealed class NullRepository : IReservationsRepository
-    {
-        public Task Create(Reservation reservation)
-        {
-            return Task.CompletedTask;
-        }
-    }
 }
