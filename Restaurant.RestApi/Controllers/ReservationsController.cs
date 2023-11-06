@@ -12,19 +12,24 @@ public class ReservationsController(IReservationsRepository Repository) // : Con
     public IReservationsRepository Repository { get; } = Repository ?? throw new ArgumentNullException(nameof(Repository));
 
     //   [HttpPost]
-    public async Task Post(ReservationDto dto)
+    public async Task<ActionResult> Post(ReservationDto dto)
     {
         ArgumentNullException.ThrowIfNull(dto);
-        await Repository
-            .Create(
-                new Reservation(
-                    At: DateTime.Parse(dto.At!, CultureInfo.InvariantCulture),
+        if (dto.At is null)
+        {
+            return new BadRequestResult();
+        }
+
+        Reservation reservation = new(
+                    At: DateTime.Parse(dto.At, CultureInfo.InvariantCulture),
                     Email: dto.Email!,
                     Name: dto.Name!,
                     Quantity: dto.Quantity
-                )
-            )
-            .ConfigureAwait(false);
+                );
+
+        await Repository.Create(reservation).ConfigureAwait(false);
+
+        return new NoContentResult();
     }
     // [HttpGet]
     // public IActionResult Get()

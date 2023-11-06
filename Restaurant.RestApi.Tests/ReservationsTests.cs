@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis; // to use SuppressMessage
 using System.Globalization; // CultureInfo
+using System.Net; // HttpStatusCode
 using System.Text.Json; // to use JsonSerializer
 using Dustech.Restaurant.RestApi.Controllers; // to use ReservationsController
 using Dustech.Restaurant.RestApi.Dtos; // to use ReservationDto
@@ -50,7 +51,6 @@ public class ReservationsTests
     [InlineData(
               "2023-11-06 19:00", "bongo@patrikrio.net", "Munzio Burzo", 5)]
     [InlineData("2023-11-13 18:15", "panico@example.com", "Panic Krg", 9)]
-
     public async Task PostValidReservationWhenDatabaseIsEmpty(string at,
               string email,
               string name,
@@ -78,4 +78,19 @@ public class ReservationsTests
         Assert.Contains(expected, db);
     }
 
+    [Theory]
+
+    [InlineData(null, "j@example.net", "Jay Xerxes", 1)]
+    public async Task PostInvalidReservation(
+    string at,
+    string email,
+    string name,
+    int quantity)
+    {
+        var response =
+            await PostReservation(new { at, email, name, quantity });
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+    }
 }
