@@ -82,6 +82,10 @@ public class ReservationsTests
     [InlineData(null, "j@example.net", "Jay Xerxes", 1)]
     [InlineData("not a date", "panino@calongoep.it", "Carmelo", 1)]
     [InlineData("2023-11-13 18:15", null, "Jay Xerxes", 1)]
+    // senza la validazione del numero di posti il test fallisce perche il dto viene accettato
+    [InlineData("2023-11-14 18:15", "validmail@v.it", "Per1", 0)]
+    // senza la validazione del numero di posti il test fallisce perche il dto viene accettato
+    [InlineData("2023-11-15 18:15", "validmail@v.it", "Per2", -1)]
     public async Task PostInvalidReservation(
     string at,
     string email,

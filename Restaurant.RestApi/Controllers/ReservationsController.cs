@@ -19,6 +19,8 @@ public class ReservationsController(IReservationsRepository Repository) // : Con
             return new BadRequestResult();
         if (dto.Email is null)
             return new BadRequestResult();
+        if (dto.Quantity < 1)
+            return new BadRequestResult();
 
 
         Reservation reservation = new(
