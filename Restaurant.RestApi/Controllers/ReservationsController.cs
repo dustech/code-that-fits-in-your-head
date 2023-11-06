@@ -26,7 +26,7 @@ public class ReservationsController(IReservationsRepository Repository) // : Con
         Reservation reservation = new(
                     At: DateTime.Parse(dto.At, CultureInfo.InvariantCulture),
                     Email: dto.Email,
-                    Name: dto.Name!,
+                    Name: dto.Name ?? "",
                     Quantity: dto.Quantity
                 );
 

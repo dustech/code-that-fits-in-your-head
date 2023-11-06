@@ -51,6 +51,7 @@ public class ReservationsTests
     [InlineData(
               "2023-11-06 19:00", "bongo@patrikrio.net", "Munzio Burzo", 5)]
     [InlineData("2023-11-13 18:15", "panico@example.com", "Panic Krg", 9)]
+    [InlineData("2023-11-15 18:15", "validmail@v.it", null, 1)]
     public async Task PostValidReservationWhenDatabaseIsEmpty(string at,
               string email,
               string name,
@@ -73,7 +74,7 @@ public class ReservationsTests
         var expected = new Reservation(
             DateTime.Parse(dto.At, CultureInfo.InvariantCulture),
                 dto.Email,
-                dto.Name,
+                dto.Name ?? "",
                 dto.Quantity);
         Assert.Contains(expected, db);
     }
