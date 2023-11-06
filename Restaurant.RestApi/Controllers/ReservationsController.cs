@@ -19,10 +19,14 @@ public class ReservationsController(IReservationsRepository Repository) // : Con
         {
             return new BadRequestResult();
         }
+        if (dto.Email is null)
+        {
+            return new BadRequestResult();
+        }
 
         Reservation reservation = new(
                     At: DateTime.Parse(dto.At, CultureInfo.InvariantCulture),
-                    Email: dto.Email!,
+                    Email: dto.Email,
                     Name: dto.Name!,
                     Quantity: dto.Quantity
                 );
