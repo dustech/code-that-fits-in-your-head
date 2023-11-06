@@ -1,4 +1,5 @@
-﻿using Dustech.Restaurant.RestApi.Dtos; // to use ReservationDto
+﻿using System.Globalization; // CultureInfo
+using Dustech.Restaurant.RestApi.Dtos; // to use ReservationDto
 using Dustech.Restaurant.RestApi.Interfaces; // to use IReservationsRepository
 using Dustech.Restaurant.RestApi.Models; // to use Reservation
 using Microsoft.AspNetCore.Mvc; // to use vApiController, Route
@@ -17,10 +18,10 @@ public class ReservationsController(IReservationsRepository Repository) // : Con
         await Repository
             .Create(
                 new Reservation(
-                    At: new DateTime(2023, 11, 24, 19, 0, 0),
-                    Email: "polonzomolofoloppo@polonzo.com",
-                    Name: "Polonzo, Mr.",
-                    Quantity: 4
+                    At: DateTime.Parse(dto.At!, CultureInfo.InvariantCulture),
+                    Email: dto.Email!,
+                    Name: dto.Name!,
+                    Quantity: dto.Quantity
                 )
             )
             .ConfigureAwait(false);
