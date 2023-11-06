@@ -80,6 +80,7 @@ public class ReservationsTests
 
     [Theory(DisplayName = "PostInvalidReservation")]
     [InlineData(null, "j@example.net", "Jay Xerxes", 1)]
+    [InlineData("not a date", "panino@calongoep.it", "Carmelo", 1)]
     [InlineData("2023-11-13 18:15", null, "Jay Xerxes", 1)]
     public async Task PostInvalidReservation(
     string at,
