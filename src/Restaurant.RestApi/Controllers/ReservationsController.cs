@@ -15,13 +15,10 @@ public class ReservationsController(IReservationsRepository repository) // : Con
     public async Task<ActionResult> Post(ReservationDto dto)
     {
         ArgumentNullException.ThrowIfNull(dto);
-        if (!DateTime.TryParse(dto.At, CultureInfo.InvariantCulture, out var d))
-            return new BadRequestResult();
-        if (dto.Email is null)
-            return new BadRequestResult();
-        if (dto.Quantity < 1)
+        if (!IsValid(dto))
             return new BadRequestResult();
 
+        var d = DateTime.Parse(dto.At!, CultureInfo.InvariantCulture);
         var reservations = await Repository.ReadReservations(d).ConfigureAwait(false);
         int reservedSeats = reservations.Sum(r => r.Quantity);
         if (10 < reservedSeats + dto.Quantity)
@@ -29,8 +26,8 @@ public class ReservationsController(IReservationsRepository repository) // : Con
                 StatusCodes.Status500InternalServerError);
 
         Reservation reservation = new(
-                    At: DateTime.Parse(dto.At, CultureInfo.InvariantCulture),
-                    Email: dto.Email,
+                    At: DateTime.Parse(dto.At!, CultureInfo.InvariantCulture),
+                    Email: dto.Email!,
                     Name: dto.Name ?? "",
                     Quantity: dto.Quantity
                 );
@@ -40,5 +37,11 @@ public class ReservationsController(IReservationsRepository repository) // : Con
         return new NoContentResult();
     }
 
+    private static bool IsValid(ReservationDto dto)
+    {
+        return DateTime.TryParse(dto.At, CultureInfo.InvariantCulture, out _)
+                && !(dto.Email is null)
+                && 0 < dto.Quantity;
+    }
 
 }
