@@ -105,4 +105,29 @@ public class ReservationsTests
             HttpStatusCode.InternalServerError,
             response.StatusCode);
     }
+
+    [Fact(DisplayName = "BookTableWhenFreeSeatingIsAvailable")]
+    public async Task BookTableWhenFreeSeatingIsAvailable()
+    {
+        using var service = new RestaurantApiFactory();
+        await service.PostReservation(new
+        {
+            at = "2023-01-02 18:15",
+            email = "net@example.net",
+            name = "Ned Tucker",
+            quantity = 2
+        });
+
+        var response = await service.PostReservation(new
+        {
+            at = "2023-01-02 18:30",
+            email = "kant@example.edu",
+            name = "Katrine Nøhr Troelsen",
+            quantity = 4
+        });
+
+        Assert.True(
+            response.IsSuccessStatusCode,
+            $"Actual status code: {response.StatusCode}.");
+    }
 }

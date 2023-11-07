@@ -23,9 +23,11 @@ public class ReservationsController(IReservationsRepository Repository) // : Con
             return new BadRequestResult();
 
         var reservations = await Repository.ReadReservations(d).ConfigureAwait(false);
-
-        if (reservations.Count != 0)
-            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        int reservedSeats =
+                reservations.Select(r => r.Quantity).SingleOrDefault();
+        if (10 < reservedSeats + dto.Quantity)
+            return new StatusCodeResult(
+                StatusCodes.Status500InternalServerError);
 
 
         Reservation reservation = new(
