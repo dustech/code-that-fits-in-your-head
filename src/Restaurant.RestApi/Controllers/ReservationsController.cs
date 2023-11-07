@@ -43,18 +43,6 @@ public class ReservationsController // : ControllerBase
 
         return new NoContentResult();
     }
-    // [HttpGet]
-    // public IActionResult Get()
-    // {
-    //     var json = new
-    //     {
-    //         at = "2023-11-02 19:00",
-    //         email = "foo@bar.com",
-    //         name = "Foo Bar Buzzzississi",
-    //         quantity = 2
-    //     };
 
-    //     return Ok(json);
-    // }
 
 }
