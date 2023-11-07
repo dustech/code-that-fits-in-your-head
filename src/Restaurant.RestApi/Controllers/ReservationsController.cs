@@ -15,7 +15,7 @@ public class ReservationsController(IReservationsRepository repository) // : Con
     public async Task<ActionResult> Post(ReservationDto dto)
     {
         ArgumentNullException.ThrowIfNull(dto);
-        if (!IsValid(dto))
+        if (!dto.IsValid)
             return new BadRequestResult();
 
         var d = DateTime.Parse(dto.At!, CultureInfo.InvariantCulture);
@@ -37,11 +37,5 @@ public class ReservationsController(IReservationsRepository repository) // : Con
         return new NoContentResult();
     }
 
-    private static bool IsValid(ReservationDto dto)
-    {
-        return DateTime.TryParse(dto.At, CultureInfo.InvariantCulture, out _)
-                && !(dto.Email is null)
-                && 0 < dto.Quantity;
-    }
 
 }
