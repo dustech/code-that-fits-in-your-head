@@ -1,11 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis; // to use SuppressMessage
-using System.Globalization; // CultureInfo
+﻿using System.Globalization; // CultureInfo
 using System.Net; // HttpStatusCode
-using System.Text.Json; // to use JsonSerializer
 using Dustech.Restaurant.RestApi.Controllers; // to use ReservationsController
 using Dustech.Restaurant.RestApi.Dtos; // to use ReservationDto
 using Dustech.Restaurant.RestApi.Models; // to use Reservation
-using SysMed = System.Net.Http.Headers; // to use MediaTypeValue
+
 
 namespace Dustech.Restaurant.RestApi.Tests;
 
@@ -14,7 +12,8 @@ public class ReservationsTests
     [Fact(DisplayName = "PostValidReservation")]
     public async Task PostValidReservation()
     {
-        var response = await PostReservation(new
+        using var service = new RestaurantApiFactory();
+        var response = await service.PostReservation(new
         {
             at = "2023-11-02 19:00",
             email = "foo@bar.com",
@@ -23,27 +22,6 @@ public class ReservationsTests
         });
 
         Assert.True(response.IsSuccessStatusCode, $"Actual status code: {response.StatusCode}.");
-    }
-
-
-
-
-
-    [SuppressMessage(
-                "Usage",
-                "CA2234:Pass system uri objects instead of strings",
-                Justification = "URL isn't passed as variable, but as literal.")]
-    private static async Task<HttpResponseMessage> PostReservation(object reservation)
-    {
-        using RestaurantApiFactory factory = new();
-        var client = factory.CreateClient();
-
-        string json = JsonSerializer.Serialize(reservation);
-        SysMed.MediaTypeHeaderValue mediaTypeHeaderValue = new("application/json");
-        using StringContent content = new(json, mediaTypeHeaderValue);
-
-
-        return await client.PostAsync("reservations", content);
     }
 
 
@@ -71,7 +49,7 @@ public class ReservationsTests
 
         await sut.Post(dto);
 
-        var expected = new Reservation(
+        Reservation expected = new(
             DateTime.Parse(dto.At, CultureInfo.InvariantCulture),
                 dto.Email,
                 dto.Name ?? "",
@@ -93,8 +71,9 @@ public class ReservationsTests
     string name,
     int quantity)
     {
+        using RestaurantApiFactory service = new();
         var response =
-            await PostReservation(new { at, email, name, quantity });
+            await service.PostReservation(new { at, email, name, quantity });
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
