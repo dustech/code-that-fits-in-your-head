@@ -28,7 +28,6 @@ public class ReservationsController(IReservationsRepository Repository) // : Con
             return new StatusCodeResult(
                 StatusCodes.Status500InternalServerError);
 
-
         Reservation reservation = new(
                     At: DateTime.Parse(dto.At, CultureInfo.InvariantCulture),
                     Email: dto.Email,
