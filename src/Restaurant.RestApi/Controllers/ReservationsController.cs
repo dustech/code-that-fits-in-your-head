@@ -19,7 +19,7 @@ public class ReservationsController // : ControllerBase
     public async Task<ActionResult> Post(ReservationDto dto)
     {
         ArgumentNullException.ThrowIfNull(dto);
-        if (!DateTime.TryParse(dto.At, out var d))
+        if (!DateTime.TryParse(dto.At, CultureInfo.InvariantCulture, out var d))
             return new BadRequestResult();
         if (dto.Email is null)
             return new BadRequestResult();
