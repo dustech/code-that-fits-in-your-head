@@ -2,7 +2,6 @@
 using Dustech.Restaurant.RestApi.Models; // Reservation
 using Microsoft.Data.SqlClient; // SqlConnection,SqlCommand,SqlParameter
 using System.Data; // SqlDbType
-using System.Globalization; // CultureInfo 
 
 namespace Dustech.Restaurant.RestApi.Repositories;
 
@@ -53,8 +52,45 @@ public class SqlReservationsRepository(string connectionString) : IReservationsR
         await conn.OpenAsync().ConfigureAwait(false);
         await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
     }
+
+    public async Task<IReadOnlyCollection<Reservation>> ReadReservations(
+            DateTime dateTime)
+    {
+        var result = new List<Reservation>();
+
+        using SqlConnection conn = new(ConnectionString);
+        using SqlCommand cmd = new(readByRangeSql, conn);
+        SqlParameter p1;
+        p1 = new()
+        {
+            ParameterName = "At",
+            SqlDbType = SqlDbType.DateTime,
+            SqlValue = dateTime.Date
+        };
+        cmd.Parameters.AddRange([p1]);
+
+        await conn.OpenAsync().ConfigureAwait(false);
+        using var rdr =
+            await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+
+        while (await rdr.ReadAsync().ConfigureAwait(false))
+            result.Add(
+                new Reservation(
+                    (DateTime)rdr["At"],
+                    (string)rdr["Name"],
+                    (string)rdr["Email"],
+                    (int)rdr["Quantity"]));
+
+        return result.AsReadOnly();
+    }
+
     private const string createReservationSql = @"
             INSERT INTO
                 [dbo].[Reservations] ([At], [Name], [Email], [Quantity])
             VALUES (@At, @Name, @Email, @Quantity)";
+
+    private const string readByRangeSql = @"
+            SELECT [At], [Name], [Email], [Quantity]
+            FROM [dbo].[Reservations]
+            WHERE CONVERT(DATE, [At]) = @At";
 }

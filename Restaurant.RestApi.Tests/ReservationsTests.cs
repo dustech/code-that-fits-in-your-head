@@ -30,6 +30,8 @@ public class ReservationsTests
               "2023-11-06 19:00", "bongo@patrikrio.net", "Munzio Burzo", 5)]
     [InlineData("2023-11-13 18:15", "panico@example.com", "Panic Krg", 9)]
     [InlineData("2023-11-15 18:15", "validmail@v.it", null, 1)]
+    [InlineData(
+              "2022-03-18 17:30", "thesameemail@example.org", "Shanghai Li", 5)]
     public async Task PostValidReservationWhenDatabaseIsEmpty(string at,
               string email,
               string name,
@@ -94,7 +96,7 @@ public class ReservationsTests
         var response = await service.PostReservation(new
         {
             at = "2022-03-18 17:30",
-            email = "shouldgiveerror@example.org",
+            email = "thesameemail@example.org",
             name = "Shanghai Li",
             quantity = 5
         });

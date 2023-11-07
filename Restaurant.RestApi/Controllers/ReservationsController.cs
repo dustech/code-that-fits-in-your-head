@@ -22,9 +22,11 @@ public class ReservationsController(IReservationsRepository Repository) // : Con
         if (dto.Quantity < 1)
             return new BadRequestResult();
 
-        if (dto.Email == "shouldgiveerror@example.org")
-            return new StatusCodeResult(
-                StatusCodes.Status500InternalServerError);
+        var reservations = await Repository.ReadReservations(d).ConfigureAwait(false);
+
+        if (reservations.Count != 0)
+            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+
 
         Reservation reservation = new(
                     At: DateTime.Parse(dto.At, CultureInfo.InvariantCulture),
