@@ -7,8 +7,8 @@ namespace Dustech.Restaurant.RestApi.Repositories;
 
 public class SqlReservationsRepository(string connectionString) : IReservationsRepository
 {
-    public string ConnectionString { get; }
-    = connectionString ?? throw new ArgumentNullException(connectionString, nameof(connectionString));
+    public string ConnectionString { get; } = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+
 
     public async Task Create(Reservation reservation)
     {
