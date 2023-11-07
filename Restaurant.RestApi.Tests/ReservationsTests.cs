@@ -78,4 +78,29 @@ public class ReservationsTests
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
     }
+
+    [Fact(DisplayName = "OverbookAttempt")]
+    public async Task OverbookAttempt()
+    {
+        using var service = new RestaurantApiFactory();
+        await service.PostReservation(new
+        {
+            at = "2022-03-18 17:30",
+            email = "bongo@t.com",
+            name = "Marina Seminova",
+            quantity = 6
+        });
+
+        var response = await service.PostReservation(new
+        {
+            at = "2022-03-18 17:30",
+            email = "shouldgiveerror@example.org",
+            name = "Shanghai Li",
+            quantity = 5
+        });
+
+        Assert.Equal(
+            HttpStatusCode.InternalServerError,
+            response.StatusCode);
+    }
 }
