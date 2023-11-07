@@ -4,5 +4,9 @@
 
 .vscode
 venv
+# per non versionare le configurazioni di sonarqube
 .sonarqube
 sonarqube.sh
+
+# per non versionare l'ouput di coverlet
+coverage.opencover.xml 
