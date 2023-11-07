@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Mvc; // to use vApiController, Route
 namespace Dustech.Restaurant.RestApi.Controllers;
 
 [ApiController, Route("[controller]")]
-public class ReservationsController(IReservationsRepository Repository) // : ControllerBase
+public class ReservationsController // : ControllerBase
 {
-    public IReservationsRepository Repository { get; } = Repository ?? throw new ArgumentNullException(nameof(Repository));
+    public ReservationsController(IReservationsRepository repository)
+    {
+        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
+    }
+    public IReservationsRepository Repository { get; }
 
     //   [HttpPost]
     public async Task<ActionResult> Post(ReservationDto dto)
