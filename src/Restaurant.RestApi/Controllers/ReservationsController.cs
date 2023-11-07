@@ -15,22 +15,19 @@ public class ReservationsController(IReservationsRepository repository) // : Con
     public async Task<ActionResult> Post(ReservationDto dto)
     {
         ArgumentNullException.ThrowIfNull(dto);
-        if (!dto.IsValid)
+        var reservation = dto.Validate();
+
+        if (null == reservation)
             return new BadRequestResult();
 
-        var d = DateTime.Parse(dto.At!, CultureInfo.InvariantCulture);
-        var reservations = await Repository.ReadReservations(d).ConfigureAwait(false);
+
+        var reservations = await Repository
+                                .ReadReservations(reservation.At)
+                                .ConfigureAwait(false);
         int reservedSeats = reservations.Sum(r => r.Quantity);
         if (10 < reservedSeats + dto.Quantity)
             return new StatusCodeResult(
                 StatusCodes.Status500InternalServerError);
-
-        Reservation reservation = new(
-                    At: DateTime.Parse(dto.At!, CultureInfo.InvariantCulture),
-                    Email: dto.Email!,
-                    Name: dto.Name ?? "",
-                    Quantity: dto.Quantity
-                );
 
         await Repository.Create(reservation).ConfigureAwait(false);
 
