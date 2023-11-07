@@ -3,6 +3,7 @@ using System.Net; // HttpStatusCode
 using Dustech.Restaurant.RestApi.Controllers; // to use ReservationsController
 using Dustech.Restaurant.RestApi.Dtos; // to use ReservationDto
 using Dustech.Restaurant.RestApi.Models; // to use Reservation
+using Dustech.Restaurant.RestApi.Repositories; // SqlReservationsRepository 
 
 
 namespace Dustech.Restaurant.RestApi.Tests;
@@ -129,5 +130,23 @@ public class ReservationsTests
         Assert.True(
             response.IsSuccessStatusCode,
             $"Actual status code: {response.StatusCode}.");
+    }
+
+    [Fact(DisplayName = "BuildValidSqlReservationRepository")]
+    public void BuildValidSqlReservationRepository()
+    {
+        string? connectionString = "validConnectionString";
+
+        var exception = Record.Exception(() => new SqlReservationsRepository(connectionString));
+
+        Assert.Null(exception);
+    }
+
+    [Fact(DisplayName = "EmptyConnectionStringShouldThrowSqlReservationRepository")]
+    public void EmptyConnectionStringShouldThrowSqlReservationRepository()
+    {
+        string connectionString = "";
+
+        Assert.Throws<ArgumentException>(() => new SqlReservationsRepository(connectionString));
     }
 }
