@@ -14,7 +14,7 @@ public class MaitreDTests
             At: DateTime.Parse("2023-11-08 18:00", CultureInfo.InvariantCulture),
             Email: "superpippo@ok.com",
             Name: "",
-            Quantity: 11
+            Quantity: 1
         );
 
         var willAccept = maitreD.WillAccept(Array.Empty<Reservation>(), sut);
