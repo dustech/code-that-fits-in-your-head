@@ -24,8 +24,7 @@ public class ReservationsController(IReservationsRepository repository) // : Con
         var reservations = await Repository
                                 .ReadReservations(reservation.At)
                                 .ConfigureAwait(false);
-        int reservedSeats = reservations.Sum(r => r.Quantity);
-        if (10 < reservedSeats + dto.Quantity)
+        if (!MaitreD.WillAccept(reservations, reservation))
             return new StatusCodeResult(
                 StatusCodes.Status500InternalServerError);
 
