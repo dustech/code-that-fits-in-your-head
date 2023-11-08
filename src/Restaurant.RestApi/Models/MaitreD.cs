@@ -1,12 +1,16 @@
-﻿namespace Dustech.Restaurant.RestApi.Models;
+﻿
+namespace Dustech.Restaurant.RestApi.Models;
 
-internal static class MaitreD
+public sealed class MaitreD(Table table)
 {
-    internal static bool WillAccept(
+    public bool WillAccept(
             IEnumerable<Reservation> existingReservations,
             Reservation candidate)
     {
+        ArgumentNullException.ThrowIfNull(existingReservations);
+        ArgumentNullException.ThrowIfNull(candidate);
+
         int reservedSeats = existingReservations.Sum(r => r.Quantity);
-        return reservedSeats + candidate.Quantity <= 10;
+        return reservedSeats + candidate.Quantity <= table.Seats;
     }
 }

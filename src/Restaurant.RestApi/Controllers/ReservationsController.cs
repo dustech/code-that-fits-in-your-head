@@ -24,7 +24,10 @@ public class ReservationsController(IReservationsRepository repository) // : Con
         var reservations = await Repository
                                 .ReadReservations(reservation.At)
                                 .ConfigureAwait(false);
-        if (!MaitreD.WillAccept(reservations, reservation))
+
+        MaitreD maitreD = new(new(TableType.Communal, 10));
+
+        if (!maitreD.WillAccept(reservations, reservation))
             return new StatusCodeResult(
                 StatusCodes.Status500InternalServerError);
 
