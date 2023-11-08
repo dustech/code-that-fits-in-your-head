@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc; // to use vApiController, Route
 namespace Dustech.Restaurant.RestApi.Controllers;
 
 [ApiController, Route("[controller]")]
-public class ReservationsController(IReservationsRepository repository) // : ControllerBase
+public class ReservationsController(IReservationsRepository repository)
 {
+    private readonly MaitreD maitreD = new(new(TableType.Communal, 10));
+
     public IReservationsRepository Repository { get; } = repository ?? throw new ArgumentNullException(nameof(repository));
 
     //   [HttpPost]
@@ -25,7 +27,6 @@ public class ReservationsController(IReservationsRepository repository) // : Con
                                 .ReadReservations(reservation.At)
                                 .ConfigureAwait(false);
 
-        MaitreD maitreD = new(new(TableType.Communal, 10));
 
         if (!maitreD.WillAccept(reservations, reservation))
             return new StatusCodeResult(
