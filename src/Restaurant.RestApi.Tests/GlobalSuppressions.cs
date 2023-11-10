@@ -9,3 +9,8 @@ using System.Diagnostics.CodeAnalysis;
     "Reliability",
     "CA2007:Consider calling ConfigureAwait on the awaited task",
     Justification = @"This is a test library, not a generally reusable library. The consumers are known.")]
+
+[assembly: SuppressMessage("Performance",
+                    "CA1861: Avoid constant arrays as arguments",
+                    Justification = @"Nei test non e' rilevante
+                    la perdita di prestazioni dovuti alle instanziazioni")]

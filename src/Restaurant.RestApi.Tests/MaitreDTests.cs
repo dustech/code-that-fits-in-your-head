@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
+﻿using System.Diagnostics.CodeAnalysis; // SuppressMessage
 using Dustech.Restaurant.RestApi.Models; // MaitreD
 
 namespace Dustech.Restaurant.RestApi.Tests;
@@ -10,10 +8,6 @@ public class MaitreDTests
 
 
     [Theory(DisplayName = "Accept")]
-    [SuppressMessage("Performance",
-                    "CA1861: Avoid constant arrays as arguments",
-                    Justification = @"Nei test non e' rilevante
-                    la perdita di prestazioni")]
     [InlineData(new int[] { 12 }, new int[] { 0 })]
     [InlineData(new int[] { 8, 11 }, new int[] { 0 })]
     [InlineData(new int[] { 2, 13 }, new int[] { 2 })]
@@ -35,12 +29,24 @@ public class MaitreDTests
         Assert.True(willAccept);
     }
 
-    [Fact]
-    public void Reject()
+    [SuppressMessage(
+            "Performance",
+            "CA1812: Avoid uninstantiated internal classes",
+            Justification = "This class is instantiated via Reflection.")]
+    private sealed class RejectTestCases : TheoryData<IEnumerable<int>>
     {
+        public RejectTestCases()
+        {
+            Add(new[] { 6, 6 });
+        }
+    }
+
+    [Theory, ClassData(typeof(RejectTestCases))]
+    public void Reject(int[] tableSeats)
+    {
+        var tables = tableSeats.Select(t => new Table(TableType: TableType.Communal, t));
         var sut = new MaitreD(
-            new Table(TableType: TableType.Communal, 6),
-            new Table(TableType: TableType.Communal, 6)
+            tables
         );
 
         Reservation r = Some.Reservation.WithQuantity(11);
