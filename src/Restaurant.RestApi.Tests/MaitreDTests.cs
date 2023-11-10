@@ -33,18 +33,22 @@ public class MaitreDTests
             "Performance",
             "CA1812: Avoid uninstantiated internal classes",
             Justification = "This class is instantiated via Reflection.")]
-    private sealed class RejectTestCases : TheoryData<IEnumerable<int>>
+    private sealed class RejectTestCases : TheoryData<IEnumerable<Table>>
     {
         public RejectTestCases()
         {
-            Add(new[] { 6, 6 });
+            Add(new[] {
+                new Table(TableType:TableType.Communal, 6),
+                new Table(TableType:TableType.Communal, 6)
+            }
+
+            );
         }
     }
 
     [Theory, ClassData(typeof(RejectTestCases))]
-    public void Reject(int[] tableSeats)
+    public void Reject(IEnumerable<Table> tables)
     {
-        var tables = tableSeats.Select(t => new Table(TableType: TableType.Communal, t));
         var sut = new MaitreD(
             tables
         );
