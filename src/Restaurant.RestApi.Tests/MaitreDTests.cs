@@ -46,6 +46,13 @@ public class MaitreDTests
             );
 
             Add(new[] {
+                new Table(TableType:TableType.Communal, 10)
+
+            },
+            Array.Empty<Reservation>()
+            );
+
+            Add(new[] {
                 new Table(TableType:TableType.Standard, 12)
             },
             new[] { Some.Reservation.WithQuantity(1) }
