@@ -33,4 +33,26 @@ public class MaitreDTests
 
         Assert.True(willAccept);
     }
+
+    [Fact]
+    public void Reject()
+    {
+        var sut = new MaitreD(
+            new Table(TableType: TableType.Communal, 6),
+            new Table(TableType: TableType.Communal, 6)
+        );
+
+        Reservation r = new(
+            At: DateTime.Parse("2023-11-08 18:00", CultureInfo.InvariantCulture),
+            Email: "superpippo@ok.com",
+            Name: "",
+            Quantity: 7
+        );
+
+        var actual = sut.WillAccept(Array.Empty<Reservation>(), r);
+
+        Assert.False(actual);
+    }
+
+
 }

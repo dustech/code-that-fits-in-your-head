@@ -3,11 +3,11 @@ namespace Dustech.Restaurant.RestApi.Models;
 
 public sealed class MaitreD
 {
-    private readonly int capacity;
+    private readonly int largestTableSize;
     public MaitreD(params Table[] tables)
     {
         ArgumentNullException.ThrowIfNull(tables);
-        capacity = tables.Sum(t => t.Seats);
+        largestTableSize = tables.Max(t => t.Seats);
     }
 
     public MaitreD(IEnumerable<Table> tables) : this(tables.ToArray())
@@ -23,6 +23,6 @@ public sealed class MaitreD
         ArgumentNullException.ThrowIfNull(candidate);
 
         int reservedSeats = existingReservations.Sum(r => r.Quantity);
-        return reservedSeats + candidate.Quantity <= capacity;
+        return reservedSeats + candidate.Quantity <= largestTableSize;
     }
 }
