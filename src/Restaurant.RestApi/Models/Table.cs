@@ -5,11 +5,14 @@ public record Table
 {
     private Table(TableType tableType, int seats)
     {
-        TableType = tableType;
         Seats = seats;
+        IsStandard = tableType == TableType.Standard;
+        IsCommunal = tableType == TableType.Communal;
+
     }
-    public TableType TableType { get; }
     public int Seats { get; }
+    public bool IsStandard { get; }
+    public bool IsCommunal { get; }
 
     public static Table Standard(int seats)
     {
@@ -23,6 +26,8 @@ public record Table
 
     public Table WithSeats(int newSeats)
     {
-        return new Table(TableType, newSeats);
+        return new Table(
+            IsStandard ? TableType.Standard : TableType.Communal
+            , newSeats);
     }
 }

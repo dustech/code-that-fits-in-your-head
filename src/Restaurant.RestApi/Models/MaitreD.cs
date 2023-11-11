@@ -29,7 +29,7 @@ public sealed class MaitreD
             if (table is { })
             {
                 availableTables.Remove(table);
-                if (table.TableType == TableType.Communal)
+                if (table.IsCommunal)
                     availableTables.Add
                     (table.WithSeats(table.Seats - r.Quantity));
             }
