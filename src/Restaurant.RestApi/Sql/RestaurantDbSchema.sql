@@ -1,5 +1,5 @@
 
-CREATE TABLE [dbo].[Reservations]
+CREATE TABLE [dbo].[Reservation]
 (
   [Id] INT NOT NULL IDENTITY,
   [At] DATETIME2 NOT NULL,

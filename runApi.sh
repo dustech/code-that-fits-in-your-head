@@ -1,3 +1,3 @@
 #!/bin/bash
 
-dotnet run --project ./Restaurant.RestApi/Restaurant.RestApi.csproj
+dotnet run --project ./src/Restaurant.RestApi/Restaurant.RestApi.csproj
