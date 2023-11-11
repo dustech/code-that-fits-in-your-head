@@ -29,7 +29,8 @@ public sealed class Program
       TrustServerCertificate = true,
       ConnectTimeout = 10,
 
-      DataSource = "localhost,1434",//Environment.GetEnvironmentVariable("DUSIP");
+      //DataSource = "localhost,1434",//Environment.GetEnvironmentVariable("DUSIP");
+      DataSource = Environment.GetEnvironmentVariable("DUSIP"),
       UserID = "dustech",
       Password = Environment.GetEnvironmentVariable("SQLPASSWORD"), // password;
       PersistSecurityInfo = false

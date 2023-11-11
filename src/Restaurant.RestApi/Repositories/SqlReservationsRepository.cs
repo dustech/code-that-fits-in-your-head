@@ -88,11 +88,11 @@ public class SqlReservationsRepository(string connectionString) : IReservationsR
 
     private const string createReservationSql = @"
             INSERT INTO
-                [dbo].[Reservations] ([At], [Name], [Email], [Quantity])
+                [dbo].[Reservation] ([At], [Name], [Email], [Quantity])
             VALUES (@At, @Name, @Email, @Quantity)";
 
     private const string readByRangeSql = @"
             SELECT [At], [Name], [Email], [Quantity]
-            FROM [dbo].[Reservations]
+            FROM [dbo].[Reservation]
             WHERE CONVERT(DATE, [At]) = @At";
 }
