@@ -13,7 +13,7 @@ public class MaitreDTests
     [InlineData(new int[] { 2, 13 }, new int[] { 2 })]
     public void Accept(int[] tableSeats, int[] reservedSeats)
     {
-        var tables = tableSeats.Select(s => new Table(TableType.Communal, s));
+        var tables = tableSeats.Select(Table.Communal);
         var sut = new MaitreD(tables);
 
         var rs = reservedSeats
@@ -39,23 +39,23 @@ public class MaitreDTests
         public RejectTestCases()
         {
             Add(new[] {
-                new Table(TableType:TableType.Communal, 6),
-                new Table(TableType:TableType.Communal, 6)
+                Table.Communal(6),
+                Table.Communal(6)
             },
             Array.Empty<Reservation>()
             );
 
             Add(new[] {
-                new Table(TableType:TableType.Communal, 10)
+                Table.Communal(10)
 
             },
             Array.Empty<Reservation>()
             );
 
             Add(new[] {
-                new Table(TableType:TableType.Standard, 12)
+                Table.Communal(12)
             },
-            new[] { Some.Reservation.WithQuantity(1) }
+            new[] { Some.Reservation.WithQuantity(2) }
             );
         }
     }

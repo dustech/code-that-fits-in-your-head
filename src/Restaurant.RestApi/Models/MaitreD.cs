@@ -31,7 +31,7 @@ public sealed class MaitreD
                 availableTables.Remove(table);
                 if (table.TableType == TableType.Communal)
                     availableTables.Add
-                    (table with { Seats = table.Seats - r.Quantity });
+                    (table.WithSeats(table.Seats - r.Quantity));
             }
         }
         return availableTables.Any(t => candidate.Quantity <= t.Seats);

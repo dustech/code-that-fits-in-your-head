@@ -9,7 +9,7 @@ namespace Dustech.Restaurant.RestApi.Controllers;
 [ApiController, Route("[controller]")]
 public class ReservationsController(IReservationsRepository repository)
 {
-    private readonly MaitreD maitreD = new(new Table(TableType.Communal, 10));
+    private readonly MaitreD maitreD = new(Table.Communal(10));
 
     public IReservationsRepository Repository { get; } = repository ?? throw new ArgumentNullException(nameof(repository));
 
