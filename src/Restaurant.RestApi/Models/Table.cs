@@ -3,11 +3,11 @@ namespace Dustech.Restaurant.RestApi.Models;
 
 public record Table
 {
-    private Table(TableType tableType, int seats)
+    private Table(bool isStandard, int seats)
     {
         Seats = seats;
-        IsStandard = tableType == TableType.Standard;
-        IsCommunal = tableType == TableType.Communal;
+        IsStandard = isStandard;
+        IsCommunal = !isStandard;
 
     }
     public int Seats { get; }
@@ -16,18 +16,18 @@ public record Table
 
     public static Table Standard(int seats)
     {
-        return new Table(TableType.Standard, seats);
+        return new Table(true, seats);
     }
 
     public static Table Communal(int seats)
     {
-        return new Table(TableType.Communal, seats);
+        return new Table(false, seats);
     }
 
     public Table WithSeats(int newSeats)
     {
         return new Table(
-            IsStandard ? TableType.Standard : TableType.Communal
+            IsStandard ? IsStandard : IsCommunal
             , newSeats);
     }
 }
