@@ -30,4 +30,9 @@ public record Table
             IsStandard ? IsStandard : IsCommunal
             , newSeats);
     }
+
+    internal Table Reserve(int seatsToReserve)
+    {
+        return WithSeats(Seats - seatsToReserve);
+    }
 }
