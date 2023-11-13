@@ -26,9 +26,7 @@ public record Table
 
     public Table WithSeats(int newSeats)
     {
-        return new Table(
-            IsStandard ? IsStandard : IsCommunal
-            , newSeats);
+        return new Table(IsStandard, newSeats);
     }
 
     internal Table Reserve(int seatsToReserve)

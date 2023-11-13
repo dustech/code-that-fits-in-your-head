@@ -76,4 +76,29 @@ public class MaitreDTests
         Assert.False(actual);
     }
 
+    [Fact(DisplayName = "CommunalTableOf10ShouldAccepttotal10SeatsReservations")]
+    public void CommunalTableOf10ShouldAccepttotal10SeatsReservations()
+    {
+        var sut = new MaitreD(Table.Communal(10));
+        //var reservationCount = Enumerable.Range(1, 9).ToList();
+        var reservations = new List<Reservation>{
+            Some.Reservation.WithQuantity(1),
+            Some.Reservation.WithQuantity(1),
+            Some.Reservation.WithQuantity(1),
+            Some.Reservation.WithQuantity(1),
+            Some.Reservation.WithQuantity(1),
+            Some.Reservation.WithQuantity(1),
+            Some.Reservation.WithQuantity(1),
+            Some.Reservation.WithQuantity(1),
+            Some.Reservation.WithQuantity(1)
+        };
+
+
+        var r = Some.Reservation.WithQuantity(1);
+
+        var actual = sut.WillAccept(reservations, r);
+
+        Assert.True(actual);
+    }
+
 }
